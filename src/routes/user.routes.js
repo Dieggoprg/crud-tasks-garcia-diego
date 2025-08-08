@@ -2,16 +2,17 @@ import { Router } from "express";
 
 export const router = Router();
 
-router.post("/users",)
-
-router.get("/users", () => {
+router.post("/users",() => {
 })
 
 router.get("/users", () => {
 })
 
-router.put("/users", () => {
+router.get("/users/:id", () => {
 })
 
-router.delete("/users", () => {
+router.put("/users/:id", () => {
+})
+
+router.delete("/users/:id", () => {
 })
