@@ -32,12 +32,19 @@ export const createTask = async (req , res) => {
     
         try {
           if (title === undefined || title === null) {return res.status(400).json({message : "El titulo no debe estar vacio"})}
+
           if (description === undefined || description === null) {return res.status(400).json({message : "El titulo no debe estar vacio"})}
 
-          const task = TaskModel.create({
-            title, description, isComplete
-          });
+          if (typeof isComplete !== "boolean") {return res.status(400).json({message : "El campo 'isComplete debe ser de tipo Boolean"})}
+
+          if (title.length > 100 || description.length > 100) {return res.status(400).json("Los campos no deben pasar los 100 Caracteres")} 
+
+          const titleUnique = await TaskModel.findOne({where : {title}});
+          if (titleUnique) {return res.status(400).json({message : "ya existe una tarea con este Titulo"})}
+
+          const task = TaskModel.create({title, description, isComplete});
           return res.status(200).json("Se creó la tarea con éxito ",task)
+
         } catch (error) {
             console.log(error)
             return res.status(500).json({message: error})
@@ -45,17 +52,40 @@ export const createTask = async (req , res) => {
     }
 
 export const updateTask = async (req,res) => {
-    const {id, title, description, isComplete} = req.body;
+    const {title, description, isComplete} = req.body;
+    const {id} = req.params.id;
+
+     const task = await Task.findByPk(id);
 
      try {
           if (title === undefined || title === null) {return res.status(400).json({message : "El titulo no debe estar vacio"})}
+
           if (description === undefined || description === null) {return res.status(400).json({message : "El titulo no debe estar vacio"})}
+
+          if (typeof isComplete !== "boolean") {return res.status(400).json({message : "El campo 'isComplete debe ser de tipo Boolean"})}
+
+          if (title.length > 100 || description.length > 100) {return res.status(400).json("Los campos no deben pasar los 100 Caracteres")}
+
+          const titleUnique = await TaskModel.findOne({where : {title}});
+          if (titleUnique) {return res.status(400).json({message : "ya existe una tarea con este Titulo"})}
 
           const [taskActualizado] = TaskModel.update(req.body, {where:{id:req.params.id}});
           if (taskActualizado) {  return res.status(200).json(taskActualizado)}
-        
+          
         } catch (error) {
             console.log(error)
             return res.status(500).json({message: error})
         }
+}
+
+export const deleteTask = async (req, res) => {
+    const {id} = req.params;
+    try {
+        const deleted = await TaskModel.destroy({where : {id}});
+
+        if (deleted > 0){return res.status(200).json("Tarea Eliminada")
+        } else {return res.status(404).json("Tarea no encontrada")}
+    } catch (error) {
+        return res.status(500).json({message : error})
+    }
 }
