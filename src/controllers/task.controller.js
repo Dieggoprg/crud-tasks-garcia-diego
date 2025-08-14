@@ -55,8 +55,6 @@ export const updateTask = async (req,res) => {
     const {title, description, isComplete} = req.body;
     const {id} = req.params.id;
 
-     const task = await Task.findByPk(id);
-
      try {
           if (title === undefined || title === null) {return res.status(400).json({message : "El titulo no debe estar vacio"})}
 
@@ -71,7 +69,7 @@ export const updateTask = async (req,res) => {
 
           const [taskActualizado] = TaskModel.update(req.body, {where:{id:req.params.id}});
           if (taskActualizado) {  return res.status(200).json(taskActualizado)}
-          
+          console.log(taskActualizado)
         } catch (error) {
             console.log(error)
             return res.status(500).json({message: error})
