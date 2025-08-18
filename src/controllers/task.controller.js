@@ -3,10 +3,17 @@ import { UsersModel } from "../models/user.model.js";
 
 export const getAllTask = async (req, res) => {
     try {
-        const getTask = await TaskModel.findAll();
+        const getTask = await TaskModel.findAll({
+            include : {
+                model : UsersModel,
+                attributes : {exclude : ["password", "email"]}
+            }
+        });
+        console.log(getTask)
 
         if(!getTask) { return res.status(400).json("No se encontraron las Tareas")}
-        return res.status(200).json("Tareas Encontradas ", getTask)
+
+        return res.status(200).json(getTask)
 
     } catch (error) {
         return res.status(500).json({message: error})
