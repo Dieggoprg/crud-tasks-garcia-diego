@@ -4,6 +4,7 @@ import { UsersModel } from "../models/user.model.js";
 export const getAllTask = async (req, res) => {
     try {
         const getTask = await TaskModel.findAll({
+            attributes : {exclude:["user_id"]},
             include : {
                 model : UsersModel,
                 attributes : {exclude : ["password", "email"]}
@@ -24,7 +25,12 @@ export const getAllTask = async (req, res) => {
 export const getfindId = async (req, res) => {
     const {id} = req.params;
     try {
-        const task = await TaskModel.findByPk(req.params.id);
+        const task = await TaskModel.findByPk(id, {
+            include: {
+                model : UsersModel,
+                attributes: ["id","name","email"]
+            }
+        });
 
         if (task) {return res.status(200).json(task)}
         else res.status(404).json({message: "Tarea no encontrada"})
