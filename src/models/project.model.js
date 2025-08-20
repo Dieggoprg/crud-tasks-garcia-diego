@@ -18,10 +18,12 @@ export const ProjectModel = sequelize.define("Projects",
 
     UsersModel.belongsToMany(ProjectModel, {
         through: "Users_Projects",
-        foreignKey : "user_id"
+        foreignKey : "user_id",
+        as: "author"
     })
 
     ProjectModel.belongsToMany(UsersModel, {
         through : "Users_Projects",
-        foreignKey : "project_id"
+        foreignKey : "project_id",
+        as: "author"
     })
