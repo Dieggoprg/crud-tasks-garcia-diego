@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { Sequelize } from "sequelize"
 
+
 export const sequelize = new Sequelize (
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -16,7 +17,7 @@ export const dbStart = async () => {
     try {
         await sequelize.authenticate();
         console.log("Autenticación con éxito");
-        await sequelize.sync();
+        await sequelize.sync({force:true});
         console.log("Se sincronizó correctamente con la base de Datos")
     } catch (error) {
         console.log("OCUURIÓ UN ERROR CON LA CONEXIÓN A LA BASE DE DATOS")

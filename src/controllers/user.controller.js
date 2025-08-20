@@ -50,7 +50,7 @@ export const createUser = async (req , res) => {
         if (verificarEmail) {return res.status(400).json({ message: "ya existe un usuario con este email"})}
 
         const user = UsersModel.create(req.body);
-        return res.status(200).json("Se creó el Usuario con éxito ",user)
+        return res.status(200).json([{"message": "Se creó el Usuario con éxito "},req.body])
  } catch (error) {
         console.log(error)
         return res.status(500).json({message: "Ocurrió un error"})
@@ -64,7 +64,7 @@ export const updateUser = async (req,res) => {
     try {
      const user = await UsersModel.findByPk(req.params.id);
      if (!user) {return res.status(404).json({Message : "Ususario noo encontrado"})}
-     if (!name || !email || !password) {return res.status(400).json({message: "Los campos no pueden estar vacíos"})}
+     if (!name || !email || !password){return res.status(400).json({message: "Los campos no pueden estar vacíos"})}
 
      const existeEmail = await UsersModel.findOne({ where: { email: {email}, id: {[Op.ne]: req.params.id}}})
      if (existeEmail) {return res.status(400).json({message : "Email ya existente"})}

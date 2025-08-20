@@ -15,7 +15,7 @@ export const UsersModel = sequelize.define("Users", {
 
 //-----Relaciones de Uno a Uno-----//
 //un Usuario tiene un perfil//
-UsersModel.hasMany(ProfilesModel, {
+UsersModel.hasOne(ProfilesModel, {
     foreignKey : "user_id"
 })
 

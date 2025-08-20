@@ -27,7 +27,6 @@ export const createProfile = async (req,res) => {
 
         //Busco si existe un usuario para poder crear una tarea.
           const usuarioExiste = await UsersModel.findByPk(user_id) 
-          console.log(usuarioExiste)
           if (usuarioExiste === null) {
             return res.status(400).json("No existe un usuario con ese id")
           }
@@ -35,10 +34,22 @@ export const createProfile = async (req,res) => {
             {return res.status(400).json("Se necesita un Usuario para crear las tareas")}
 
           const profile = await ProfilesModel.create({name, lastName, DNI, user_id});
-          return res.status(200).json(req.body)
+          return res.status(200).json(profile)
 
  }catch (error) {
     console.log(error)
          return res.status(500).json({message: error})
+    }
+}
+
+export const getAllProfiles = async (req,res) => {
+    try {
+     const getProfile = await ProfilesModel.findAll({
+        include : {
+         model : UsersModel,
+         attributes : {exclude : ["email", "password"]}
+     }})
+    } catch (error) {
+        
     }
 }

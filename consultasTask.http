@@ -1,0 +1,28 @@
+# GET http://localhost:4002/api/tasks
+
+# GET http://localhost:4002/api/tasks/1
+
+# POST http://localhost:4002/api/tasks
+# Content-Type: application/json
+
+# {
+#     "title" : "Tarea Superior",
+#     "description" : "Tarea principal para los estudiantes",
+#     "isComplete" : true
+# }
+
+# PUT http://localhost:4002/api/tasks/6
+# Content-Type: application/json
+
+# {
+#     "title" : "Tarea Actualizada",
+#     "description" : "Tarea principal para los estudiantes ACTUALIZADA",
+#     "isComplete" : false
+# }
+
+# DELETE http://localhost:4002/api/tasks/6
+# Content-Type: application/json
+
+
+
+
