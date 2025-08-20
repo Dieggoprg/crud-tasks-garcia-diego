@@ -16,12 +16,12 @@ export const UsersModel = sequelize.define("Users", {
 //-----Relaciones de Uno a Uno-----//
 //un Usuario tiene un perfil//
 UsersModel.hasOne(ProfilesModel, {
-    foreignKey : "user_id",
+    foreignKey : "profiles_id",
     as: "author"
 })
 
 ProfilesModel.belongsTo(UsersModel, {
     foreignKey : "user_id",
-    as: "author"
+    as: "profiles"
 })
 

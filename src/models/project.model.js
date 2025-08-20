@@ -25,5 +25,5 @@ export const ProjectModel = sequelize.define("Projects",
     ProjectModel.belongsToMany(UsersModel, {
         through : "Users_Projects",
         foreignKey : "project_id",
-        as: "author"
+        as: "project"
     })
