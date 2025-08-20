@@ -41,7 +41,7 @@ export const getfindId = async (req, res) => {
 }
 
 export const createTask = async (req , res) => {
-        const {title, description, isComplete} = req.body;
+        const {title, description, isComplete, user_id} = req.body;
 
         try {
 
